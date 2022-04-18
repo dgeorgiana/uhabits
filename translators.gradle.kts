@@ -7,9 +7,11 @@ import java.io.StringWriter
 buildscript {
     repositories {
         mavenCentral()
+        google()  // Google's Maven repository
     }
     dependencies {
         "classpath"(group = "com.opencsv", name = "opencsv", version = "5.4")
+        "classpath"(group = "com.google.gms", name = "google-services", version = "4.3.10")
     }
 }
 

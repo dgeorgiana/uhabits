@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:popupTheme="?toolbarPopupTheme"
+        style="@style/Toolbar"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="?windowBackgroundColor"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            style="@style/CardList">
+
+            <LinearLayout
+                style="@style/Card"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/user"/>
+
+                <TextView
+                    android:id="@+id/profile_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_margin="6dp"
+                    android:textColor="?aboutScreenColor"
+                    android:text="@string/user_profile_title"/>
+
+                <TextView
+                    android:id="@+id/emptySpace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Card"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/connect_to_google_account"
+                    android:gravity="center"
+                    style="@style/About.Item.Clickable"
+                    android:text="@string/google_connect"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <!--
+            <LinearLayout
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context="org.isoron.uhabits.activities.user.UserProfileActivity">
+
+                <fragment
+                    android:id="@+id/fragment"
+                    android:name="org.isoron.uhabits.activities.user.UserEmptyProfileFragment"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            -->
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

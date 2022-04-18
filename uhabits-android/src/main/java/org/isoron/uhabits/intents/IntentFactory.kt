@@ -28,6 +28,7 @@ import org.isoron.uhabits.activities.habits.edit.EditHabitActivity
 import org.isoron.uhabits.activities.habits.show.ShowHabitActivity
 import org.isoron.uhabits.activities.intro.IntroActivity
 import org.isoron.uhabits.activities.settings.SettingsActivity
+import org.isoron.uhabits.activities.user.UserProfileActivity
 import org.isoron.uhabits.core.models.Habit
 import javax.inject.Inject
 
@@ -100,4 +101,12 @@ class IntentFactory
         intent.putExtra("habitType", habitType)
         return intent
     }
+
+    // User profile activities
+    fun syncWithGoogleDrive(context: Context) =
+        buildViewIntent(context.getString(R.string.playStoreURL))
+
+    fun syncWithGoogleSheets(context: Context) =
+        buildViewIntent(context.getString(R.string.playStoreURL))
+
 }

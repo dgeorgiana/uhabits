@@ -35,11 +35,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.android.datetimepicker.time.RadialPickerLayout
 import com.android.datetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.activity_edit_habit.nameInput
-import kotlinx.android.synthetic.main.activity_edit_habit.notesInput
-import kotlinx.android.synthetic.main.activity_edit_habit.questionInput
-import kotlinx.android.synthetic.main.activity_edit_habit.targetInput
-import kotlinx.android.synthetic.main.activity_edit_habit.unitInput
+import kotlinx.android.synthetic.main.activity_edit_habit.*
 import org.isoron.platform.gui.toInt
 import org.isoron.uhabits.HabitsApplication
 import org.isoron.uhabits.R
@@ -50,18 +46,13 @@ import org.isoron.uhabits.activities.common.dialogs.WeekdayPickerDialog
 import org.isoron.uhabits.core.commands.CommandRunner
 import org.isoron.uhabits.core.commands.CreateHabitCommand
 import org.isoron.uhabits.core.commands.EditHabitCommand
-import org.isoron.uhabits.core.models.Frequency
-import org.isoron.uhabits.core.models.Habit
-import org.isoron.uhabits.core.models.HabitType
-import org.isoron.uhabits.core.models.NumericalHabitType
-import org.isoron.uhabits.core.models.PaletteColor
-import org.isoron.uhabits.core.models.Reminder
-import org.isoron.uhabits.core.models.WeekdayList
+import org.isoron.uhabits.core.models.*
 import org.isoron.uhabits.databinding.ActivityEditHabitBinding
 import org.isoron.uhabits.utils.ColorUtils
 import org.isoron.uhabits.utils.formatTime
 import org.isoron.uhabits.utils.toFormattedString
 
+@SuppressLint("StringFormatInvalid")
 fun formatFrequency(freqNum: Int, freqDen: Int, resources: Resources) = when {
     freqNum == 1 && (freqDen == 30 || freqDen == 31) -> resources.getString(R.string.every_month)
     freqDen == 30 || freqDen == 31 -> resources.getString(R.string.x_times_per_month, freqNum)
@@ -89,6 +80,7 @@ class EditHabitActivity : AppCompatActivity() {
     var reminderMin = -1
     var reminderDays: WeekdayList = WeekdayList.EVERY_DAY
     var targetType = NumericalHabitType.AT_LEAST
+    var goalType = "Personal"
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
@@ -300,6 +292,27 @@ class EditHabitActivity : AppCompatActivity() {
                 habit
             )
         }
+
+        binding.goalType.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.select_dialog_item)
+            arrayAdapter.add(getString(R.string.personal_goal))
+            arrayAdapter.add(getString(R.string.professional_goal))
+            arrayAdapter.add(getString(R.string.financial_goal))
+            arrayAdapter.add(getString(R.string.health_goal))
+            builder.setAdapter(arrayAdapter) { dialog, which ->
+                goalType = when (which) {
+                    1 -> "Personal"
+                    2 -> "Professional"
+                    3 -> "Financial"
+                    else -> "Health"
+                }
+                populateGoalType()
+                dialog.dismiss()
+            }
+            builder.show()
+        }
+
         component.commandRunner.run(command)
         finish()
     }
@@ -348,6 +361,15 @@ class EditHabitActivity : AppCompatActivity() {
         binding.targetTypePicker.text = when (targetType) {
             NumericalHabitType.AT_MOST -> getString(R.string.target_type_at_most)
             else -> getString(R.string.target_type_at_least)
+        }
+    }
+
+    private fun populateGoalType() {
+        binding.goalTypes.text = when (goalType) {
+            GoalType.PERSONAL.toString() -> getString(R.string.personal_goal)
+            GoalType.PROFESSIONAL.toString() -> getString(R.string.professional_goal)
+            GoalType.FINANCIAL.toString() -> getString(R.string.financial_goal)
+            else -> getString(R.string.health_goal)
         }
     }
 

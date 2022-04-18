@@ -26,12 +26,14 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM
 import android.widget.RelativeLayout.ALIGN_PARENT_TOP
@@ -88,6 +90,21 @@ fun RelativeLayout.addAtTop(
     view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
         addRule(ALIGN_PARENT_TOP)
     }
+    view.id = View.generateViewId()
+    this.addView(view)
+}
+
+fun RelativeLayout.addButton(
+    button: Drawable,
+    width: Int = 100,
+    height: Int = 100
+) {
+
+    val view = ImageButton(context)
+    view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
+        addRule(ALIGN_PARENT_BOTTOM)
+    }
+    view.setImageDrawable(button)
     view.id = View.generateViewId()
     this.addView(view)
 }

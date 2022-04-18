@@ -23,12 +23,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.isoron.uhabits.BaseExceptionHandler
 import org.isoron.uhabits.HabitsApplication
+import org.isoron.uhabits.R
 import org.isoron.uhabits.activities.habits.list.views.HabitCardListAdapter
+import org.isoron.uhabits.activities.user.UserProfileActivity
 import org.isoron.uhabits.core.preferences.Preferences
 import org.isoron.uhabits.core.tasks.TaskRunner
 import org.isoron.uhabits.core.ui.ThemeSwitcher.Companion.THEME_DARK
@@ -37,6 +40,7 @@ import org.isoron.uhabits.database.AutoBackup
 import org.isoron.uhabits.inject.ActivityContextModule
 import org.isoron.uhabits.inject.DaggerHabitsActivityComponent
 import org.isoron.uhabits.utils.restartWithFade
+
 
 class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
 
@@ -48,7 +52,6 @@ class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
     lateinit var prefs: Preferences
     lateinit var midnightTimer: MidnightTimer
     private val scope = CoroutineScope(Dispatchers.Main)
-
     private lateinit var menu: ListHabitsMenu
 
     override fun onQuestionMarksChanged() {
@@ -79,6 +82,12 @@ class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
         Thread.setDefaultUncaughtExceptionHandler(BaseExceptionHandler(this))
         component.listHabitsBehavior.onStartup()
         setContentView(rootView)
+
+        // Activitatea accesata la apasarea butonului de profil (UserProfileActivity)
+        val userButton: ImageButton = findViewById(R.id.user_profile_button)
+        userButton.setOnClickListener {
+            startActivity(Intent(this@ListHabitsActivity, UserProfileActivity::class.java))
+        }
     }
 
     override fun onPause() {

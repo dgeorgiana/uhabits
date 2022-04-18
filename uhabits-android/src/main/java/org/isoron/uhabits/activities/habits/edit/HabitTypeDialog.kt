@@ -25,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import org.isoron.uhabits.R
+import org.isoron.uhabits.core.models.GoalType
 import org.isoron.uhabits.core.models.HabitType
 import org.isoron.uhabits.databinding.SelectHabitTypeBinding
 import org.isoron.uhabits.intents.IntentFactory
@@ -40,17 +41,23 @@ class HabitTypeDialog : AppCompatDialogFragment() {
         val binding = SelectHabitTypeBinding.inflate(inflater, container, false)
 
         binding.buttonYesNo.setOnClickListener {
-            val intent = IntentFactory().startEditActivity(activity!!, HabitType.YES_NO.value)
+            val intent = IntentFactory().startEditActivity(requireActivity(), HabitType.YES_NO.value)
             startActivity(intent)
             dismiss()
         }
 
         binding.buttonMeasurable.setOnClickListener {
-            val intent = IntentFactory().startEditActivity(activity!!, HabitType.NUMERICAL.value)
+            val intent = IntentFactory().startEditActivity(requireActivity(), HabitType.NUMERICAL.value)
             startActivity(intent)
             dismiss()
         }
 
+        // O noua categorie de obiceiuri
+        binding.buttonType.setOnClickListener {
+            val intent = IntentFactory().startEditActivity(requireActivity(), HabitType.TYPE.value)
+            startActivity(intent)
+            dismiss()
+        }
         binding.background.setOnClickListener {
             dismiss()
         }

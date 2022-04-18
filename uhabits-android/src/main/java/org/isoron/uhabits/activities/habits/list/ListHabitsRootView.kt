@@ -19,19 +19,19 @@
 
 package org.isoron.uhabits.activities.habits.list
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat.startActivity
 import org.isoron.uhabits.R
 import org.isoron.uhabits.activities.common.views.ScrollableChart
 import org.isoron.uhabits.activities.common.views.TaskProgressBar
-import org.isoron.uhabits.activities.habits.list.views.EmptyListView
-import org.isoron.uhabits.activities.habits.list.views.HabitCardListAdapter
-import org.isoron.uhabits.activities.habits.list.views.HabitCardListView
-import org.isoron.uhabits.activities.habits.list.views.HabitCardListViewFactory
-import org.isoron.uhabits.activities.habits.list.views.HeaderView
-import org.isoron.uhabits.activities.habits.list.views.HintView
+import org.isoron.uhabits.activities.habits.list.views.*
+import org.isoron.uhabits.activities.user.UserProfileActivity
+import org.isoron.uhabits.activities.user.UserProfileButtonView
 import org.isoron.uhabits.core.models.ModelObservable
 import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.core.preferences.Preferences
@@ -40,21 +40,15 @@ import org.isoron.uhabits.core.ui.screens.habits.list.HintListFactory
 import org.isoron.uhabits.core.utils.MidnightTimer
 import org.isoron.uhabits.inject.ActivityContext
 import org.isoron.uhabits.inject.ActivityScope
-import org.isoron.uhabits.utils.addAtBottom
-import org.isoron.uhabits.utils.addAtTop
-import org.isoron.uhabits.utils.addBelow
-import org.isoron.uhabits.utils.buildToolbar
-import org.isoron.uhabits.utils.currentTheme
-import org.isoron.uhabits.utils.dim
-import org.isoron.uhabits.utils.dp
-import org.isoron.uhabits.utils.setupToolbar
-import org.isoron.uhabits.utils.sres
+import org.isoron.uhabits.utils.*
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
+
 const val MAX_CHECKMARK_COUNT = 60
 
+@SuppressLint("ResourceType")
 @ActivityScope
 class ListHabitsRootView @Inject constructor(
     @ActivityContext context: Context,
@@ -72,6 +66,7 @@ class ListHabitsRootView @Inject constructor(
     val progressBar = TaskProgressBar(context, runner)
     val hintView: HintView
     val header = HeaderView(context, preferences, midnightTimer)
+    val userIcon = UserProfileButtonView(context)
 
     init {
         val hints = resources.getStringArray(R.array.hints)
@@ -88,6 +83,9 @@ class ListHabitsRootView @Inject constructor(
                 it.topMargin = dp(-6.0f).toInt()
             }
             addAtBottom(hintView)
+
+            // Aici se adauga butonul necesar pentru accesarea profilului user-ului
+            addAtBottom(userIcon)
         }
         rootView.setupToolbar(
             toolbar = tbar,

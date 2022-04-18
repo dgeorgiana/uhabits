@@ -247,6 +247,21 @@
                 </LinearLayout>
             </FrameLayout>
 
+            <!-- Personal habit type -->
+            <FrameLayout
+                android:id="@+id/goalType"
+                style="@style/FormOuterBox">
+                <LinearLayout style="@style/FormInnerBox">
+                    <TextView
+                        style="@style/FormLabel"
+                        android:text="@string/goal_type" />
+                    <TextView
+                        android:id="@+id/goalTypes"
+                        style="@style/FormDropdown"
+                        android:textColor="?attr/contrast100"
+                        />
+                </LinearLayout>
+            </FrameLayout>
 
             <!-- Notes -->
             <FrameLayout style="@style/FormOuterBox">

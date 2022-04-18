@@ -399,4 +399,20 @@
         <item name="selectable">true</item>
     </style>
 
+    <!-- User profile tabs styles -->
+    <style name="User" />
+
+    <style name="User.Profile">
+        <item name="android:textSize">@dimen/regularTextSize</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+    <style name="User.Profile.Item">
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:background">@drawable/ripple_transparent</item>
+    </style>
+
 </resources>

@@ -78,19 +78,28 @@ android {
         isCoreLibraryDesugaringEnabled = true
         targetCompatibility(JavaVersion.VERSION_1_8)
         sourceCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     val daggerVersion = "2.41"
     val kotlinVersion = "1.6.10"
     val kxCoroutinesVersion = "1.6.0"
     val ktorVersion = "1.6.8"
     val espressoVersion = "3.4.0"
+    val fragment_version = "1.4.1"
 
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espressoVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
@@ -127,6 +136,12 @@ dependencies {
     testImplementation("com.google.dagger:dagger:$daggerVersion")
     testImplementation("junit:junit:4.13.2")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+
+    // Google account needed dependency
+    implementation("com.google.android.gms:play-services-auth:20.1.0")
+
+    // Fragments needed dependency
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
 }
 
 kapt {
