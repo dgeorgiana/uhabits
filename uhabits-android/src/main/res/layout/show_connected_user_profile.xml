@@ -28,6 +28,37 @@
                 style="@style/Card"
                 android:gravity="center">
 
+                <LinearLayout
+                    android:layout_height="45dp"
+                    android:layout_width="match_parent">
+                    <ImageButton
+                        android:id="@+id/logoutButton"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        app:srcCompat="@drawable/ic_action_cancel" />
+
+                    <TextView
+                        android:id="@+id/logout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        android:text="@string/logout"
+                        android:textColor="?aboutScreenColor"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/infoButton"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="190dp"
+                        android:layout_marginEnd="20dp"
+                        app:srcCompat="@android:drawable/ic_menu_info_details" />
+                </LinearLayout>
+
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -72,7 +103,6 @@
                     android:textAlignment="textStart"/>
 
             </LinearLayout>
-
             <!--
             <org.isoron.uhabits.activities.user.ConnectedUserProfileView
                 android:layout_width="match_parent"

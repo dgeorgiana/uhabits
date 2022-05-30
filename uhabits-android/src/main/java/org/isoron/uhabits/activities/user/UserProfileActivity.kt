@@ -1,11 +1,17 @@
 package org.isoron.uhabits.activities.user
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import org.isoron.uhabits.HabitsApplication
 import org.isoron.uhabits.R
@@ -14,25 +20,38 @@ import kotlin.coroutines.CoroutineContext
 
 
 class UserProfileActivity : AppCompatActivity(), CoroutineScope {
+    var isConnected: Boolean? = false
+    lateinit var connectToGoogleButton: SignInButton
+    lateinit var task: Task<GoogleSignInAccount>
+    lateinit var account: GoogleSignInAccount
+    val RC_SIGN_IN = 7
+
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sharedPreferences: SharedPreferences = getSharedPreferences("sharedPreferencesFile", Context.MODE_PRIVATE)
-        val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-
         super.onCreate(savedInstanceState)
         val app = application as HabitsApplication
-        if (sharedPreferences.getBoolean("isConnected", false)) {
+        val extras = intent.extras
+        if (extras != null) {
+            isConnected = extras.getBoolean("isConnected");
+        }
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        val signInIntent = mGoogleSignInClient.signInIntent
+
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account != null) {
             val connectedUserScreen = ConnectedUserScreen(
                 this,
                 app.component.intentFactory
             )
             setContentView(ConnectedUserProfileView(this, connectedUserScreen));
         } else {
-            editor.putBoolean("isConnected", false)
-            editor.apply()
-            editor.commit()
+            // User-ul nu este inca conectat
             val emptyUserScreen = EmptyUserScreen(
                 this,
                 app.component.intentFactory
@@ -40,13 +59,37 @@ class UserProfileActivity : AppCompatActivity(), CoroutineScope {
             setContentView(UserEmptyProfileView(this, emptyUserScreen))
 
             // View schimbat la apasarea butonului de conectare la contul de Google
-
-            val connectToGoogleButton: Button = findViewById(R.id.connect_to_google_account)
+            connectToGoogleButton = findViewById(R.id.connect_to_google_account)
             connectToGoogleButton.setOnClickListener {
-                editor.putBoolean("isConnected",true)
-                editor.apply()
-                editor.commit()
-                startActivity(Intent(this@UserProfileActivity, UserProfileActivity::class.java))
+                startActivityForResult(signInIntent, RC_SIGN_IN)
+                val app = application as HabitsApplication
+                val connectedUserScreen = ConnectedUserScreen(
+                    this,
+                    app.component.intentFactory
+                )
+                setContentView(ConnectedUserProfileView(this, connectedUserScreen))
+            }
+        }
+        if (account != null) {
+            val info: View = findViewById(R.id.infoButton)
+            info.setOnClickListener { view ->
+                Snackbar.make(
+                    view, "User Profile Info: \n" + account.givenName + ", " +
+                            account.familyName + ", " + account.email,
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Action", null)
+                    .show()
+            }
+
+            val logout: View = findViewById(R.id.logoutButton)
+            logout.setOnClickListener { view ->
+                mGoogleSignInClient.signOut()
+                val emptyUserScreen = EmptyUserScreen(
+                    this,
+                    app.component.intentFactory
+                )
+                setContentView(UserEmptyProfileView(this, emptyUserScreen))
             }
         }
 
@@ -55,14 +98,23 @@ class UserProfileActivity : AppCompatActivity(), CoroutineScope {
         launch {
             async(Dispatchers.Default) {
                 //Working on background thread
-                if (sharedPreferences.getBoolean("isConnected", false)) {
-                    /* Refacerea variabilei se realizeaza pe un alt thread pentru a permite
+                /* Refacerea variabilei se realizeaza pe un alt thread pentru a permite
                     logarea la Google pe thread-ul de main */
+            }
+        }
+    }
 
-                    editor.putBoolean("isConnected",false)
-                    editor.apply()
-                    editor.commit()
-                }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == 7) {
+            task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                account = task.getResult(ApiException::class.java)
+            } catch (e: ApiException) {
+                // The ApiException status code indicates the detailed failure reason.
+                Log.w("TAG", "signInResult:failed code=" + e.statusCode)
             }
         }
     }

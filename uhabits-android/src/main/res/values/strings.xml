@@ -248,6 +248,8 @@
     <string name="save_to_google_sheets">Sync with Google Sheets</string>
 
     <string name="loading">Loading...</string>
+    <string name="logout">Log Out</string>
+
 
     <!-- Strings used for goal type -->
     <string name="goal_type">Goal Type</string>
@@ -256,5 +258,9 @@
     <string name="professional_goal">Professional</string>
     <string name="financial_goal">Financial</string>
     <string name="health_goal">Health</string>
+
+    <!-- Strings used for notifications -->
+    <string name="channel_name">Notifications channel</string>>
+    <string name="notification_channel_description">Notifications channel description</string>>
 
 </resources>

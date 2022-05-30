@@ -7,7 +7,6 @@ class ConnectedUserScreen(
     private val activity: UserProfileActivity,
     private val intents: IntentFactory
     ) {
-
         fun showSyncWithGoogleDrive() =
             activity.startActivitySafely(intents.syncWithGoogleDrive(activity))
 

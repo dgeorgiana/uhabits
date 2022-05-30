@@ -100,6 +100,7 @@ dependencies {
     val ktorVersion = "1.6.8"
     val espressoVersion = "3.4.0"
     val fragment_version = "1.4.1"
+    val core_version = "1.6.0"
 
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espressoVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
@@ -138,10 +139,17 @@ dependencies {
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
     // Google account needed dependency
-    implementation("com.google.android.gms:play-services-auth:20.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.2.0")
 
     // Fragments needed dependency
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
+
+    //REST API needed dependency
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.retrofit2:retrofit:2.3.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.3.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.3.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.0.1")
 }
 
 kapt {

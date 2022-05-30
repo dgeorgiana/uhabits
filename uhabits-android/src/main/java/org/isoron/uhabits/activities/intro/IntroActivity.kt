@@ -19,18 +19,31 @@
 
 package org.isoron.uhabits.activities.intro
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import org.isoron.uhabits.R
+import org.isoron.uhabits.activities.habits.list.ListHabitsActivity
 
 /**
  * Activity that introduces the app to the user, shown only after the app is
  * launched for the first time.
  */
 class IntroActivity : AppIntro2() {
+
+    // Canal de notificari
+    var CHANNEL_ID: String = "my_notification_channel"
+    var NOTIFICATION_ID: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +75,25 @@ class IntroActivity : AppIntro2() {
                 Color.parseColor("#9575cd")
             )
         )
+
+        // Crearea canalului pentru notificari este realizata cat mai devreme in aplicatie
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        // Crearea canalului de notificari
+        if (VERSION.SDK_INT >= VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.notification_channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     override fun onDonePressed(currentFragment: Fragment?) {

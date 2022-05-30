@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "835084630584",
+    "project_id": "habitsdatabase",
+    "storage_bucket": "habitsdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835084630584:android:d55b687837d60bbe2804cd",
+        "android_client_info": {
+          "package_name": "org.isoron.uhabits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835084630584-h1s01pq5k9d48asl2c1er3k9b55fdfg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf7lLnULebCB_vQrkn4Xk7EWF6E2YA8Bo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835084630584-h1s01pq5k9d48asl2c1er3k9b55fdfg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

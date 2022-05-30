@@ -21,16 +21,19 @@ package org.isoron.uhabits.activities.habits.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.android.synthetic.main.activity_list_habits_ideas.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import org.isoron.uhabits.BaseExceptionHandler
-import org.isoron.uhabits.HabitsApplication
-import org.isoron.uhabits.R
+import org.isoron.uhabits.*
 import org.isoron.uhabits.activities.habits.list.views.HabitCardListAdapter
+import org.isoron.uhabits.activities.intro.NotificationUtils
 import org.isoron.uhabits.activities.user.UserProfileActivity
 import org.isoron.uhabits.core.preferences.Preferences
 import org.isoron.uhabits.core.tasks.TaskRunner
@@ -40,7 +43,10 @@ import org.isoron.uhabits.database.AutoBackup
 import org.isoron.uhabits.inject.ActivityContextModule
 import org.isoron.uhabits.inject.DaggerHabitsActivityComponent
 import org.isoron.uhabits.utils.restartWithFade
-
+import retrofit2.Call
+import retrofit2.Response
+import java.util.*
+import javax.security.auth.callback.Callback
 
 class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
 
@@ -53,6 +59,10 @@ class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
     lateinit var midnightTimer: MidnightTimer
     private val scope = CoroutineScope(Dispatchers.Main)
     private lateinit var menu: ListHabitsMenu
+
+    private val calendar = Calendar.getInstance()
+    private var mNotificationTime: Long = 0
+    private var mNotified = false
 
     override fun onQuestionMarksChanged() {
         invalidateOptionsMenu()
@@ -83,10 +93,21 @@ class ListHabitsActivity : AppCompatActivity(), Preferences.Listener {
         component.listHabitsBehavior.onStartup()
         setContentView(rootView)
 
+        if (!mNotified) {
+            //Setarea orei de notificare (in varianta curenta, ora de notificare este setata la pornirea aplicatiei)
+            mNotificationTime = calendar.timeInMillis + 20 * 1000L //20 de secunde de la pornirea aplicatiei
+            NotificationUtils().setNotification(mNotificationTime, this@ListHabitsActivity)
+        }
         // Activitatea accesata la apasarea butonului de profil (UserProfileActivity)
         val userButton: ImageButton = findViewById(R.id.user_profile_button)
         userButton.setOnClickListener {
             startActivity(Intent(this@ListHabitsActivity, UserProfileActivity::class.java))
+        }
+
+        // Activitatea accesata la apasarea butonului de profil (ListHabitsIdeasActivity)
+        val ideasButton: ImageButton = findViewById(R.id.ideas_button)
+        ideasButton.setOnClickListener {
+            startActivity(Intent(this@ListHabitsActivity, ListHabitsIdeasActivity::class.java))
         }
     }
 

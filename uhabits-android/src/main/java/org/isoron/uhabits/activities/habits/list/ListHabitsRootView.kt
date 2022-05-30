@@ -67,6 +67,7 @@ class ListHabitsRootView @Inject constructor(
     val hintView: HintView
     val header = HeaderView(context, preferences, midnightTimer)
     val userIcon = UserProfileButtonView(context)
+    val habitsIdeas = HabitsIdeasButtonView(context)
 
     init {
         val hints = resources.getStringArray(R.array.hints)
@@ -85,7 +86,10 @@ class ListHabitsRootView @Inject constructor(
             addAtBottom(hintView)
 
             // Aici se adauga butonul necesar pentru accesarea profilului user-ului
-            addAtBottom(userIcon)
+            addAtBottomCustom(userIcon)
+
+            // Aici se adauga butonul necesar pentru accesarea listei de idei de obiceiuri
+            addAtBottomCustom(habitsIdeas)
         }
         rootView.setupToolbar(
             toolbar = tbar,

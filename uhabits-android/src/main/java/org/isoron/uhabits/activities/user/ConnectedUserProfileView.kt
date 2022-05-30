@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import com.google.android.gms.tasks.OnCompleteListener
+import kotlinx.android.synthetic.main.show_connected_user_profile.view.*
 import org.isoron.uhabits.BuildConfig
 import org.isoron.uhabits.R
 import org.isoron.uhabits.core.models.PaletteColor
 import org.isoron.uhabits.databinding.ShowConnectedUserProfileBinding
 import org.isoron.uhabits.utils.currentTheme
 import org.isoron.uhabits.utils.setupToolbar
+
 
 @SuppressLint("ViewConstructor")
 class ConnectedUserProfileView (

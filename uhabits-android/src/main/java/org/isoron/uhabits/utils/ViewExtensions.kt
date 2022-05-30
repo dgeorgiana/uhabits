@@ -81,6 +81,19 @@ fun RelativeLayout.addAtBottom(
     this.addView(view)
 }
 
+fun RelativeLayout.addAtBottomCustom(
+    view: View,
+    width: Int = WRAP_CONTENT,
+    height: Int = WRAP_CONTENT
+) {
+
+    view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
+        addRule(ALIGN_PARENT_BOTTOM)
+    }
+    view.id = View.generateViewId()
+    this.addView(view)
+}
+
 fun RelativeLayout.addAtTop(
     view: View,
     width: Int = MATCH_PARENT,
@@ -90,21 +103,6 @@ fun RelativeLayout.addAtTop(
     view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
         addRule(ALIGN_PARENT_TOP)
     }
-    view.id = View.generateViewId()
-    this.addView(view)
-}
-
-fun RelativeLayout.addButton(
-    button: Drawable,
-    width: Int = 100,
-    height: Int = 100
-) {
-
-    val view = ImageButton(context)
-    view.layoutParams = RelativeLayout.LayoutParams(width, height).apply {
-        addRule(ALIGN_PARENT_BOTTOM)
-    }
-    view.setImageDrawable(button)
     view.id = View.generateViewId()
     this.addView(view)
 }

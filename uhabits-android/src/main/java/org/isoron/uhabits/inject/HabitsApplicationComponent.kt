@@ -19,7 +19,6 @@
 package org.isoron.uhabits.inject
 
 import android.content.Context
-import android.widget.ImageButton
 import dagger.Component
 import org.isoron.uhabits.core.AppScope
 import org.isoron.uhabits.core.commands.CommandRunner

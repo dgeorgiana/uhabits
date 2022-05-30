@@ -104,9 +104,8 @@ class IntentFactory
 
     // User profile activities
     fun syncWithGoogleDrive(context: Context) =
-        buildViewIntent(context.getString(R.string.playStoreURL))
+        buildViewIntent(context.getString(R.string.googleDriveURL))
 
     fun syncWithGoogleSheets(context: Context) =
-        buildViewIntent(context.getString(R.string.playStoreURL))
-
+        buildViewIntent(context.getString(R.string.googleSheetsURL))
 }

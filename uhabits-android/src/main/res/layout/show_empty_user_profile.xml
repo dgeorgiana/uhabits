@@ -56,12 +56,10 @@
                 style="@style/Card"
                 android:gravity="center">
 
-                <Button
+                <com.google.android.gms.common.SignInButton
                     android:id="@+id/connect_to_google_account"
-                    android:gravity="center"
-                    style="@style/About.Item.Clickable"
-                    android:text="@string/google_connect"
-                    android:textColor="@color/black"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
             <!--
             <LinearLayout

@@ -28,6 +28,8 @@
     <string name="bugReportTo">dev@loophabits.org</string>
     <string name="bugReportSubject">Bug Report - Loop Habit Tracker</string>
     <string name="syncBaseURL" formatted="false">https://sync.loophabits.org</string>
+    <string name="googleDriveURL" formatted="false">https://www.google.com/drive/</string>
+    <string name="googleSheetsURL" formatted="false">https://www.google.com/sheets/about/</string>
 
     <string-array name="snooze_picker_names">
         <item>@string/interval_15_minutes</item>
